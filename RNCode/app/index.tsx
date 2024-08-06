@@ -51,6 +51,14 @@ const basicData: Item[] = [
   },
 ];
 
+const libraryData: Item[] = [
+  {
+    id: '1',
+    title: 'React Native Responsive Screen',
+    navigateTo: 'ResponsiveScreen'
+  }
+];
+
 const App = () => {
   const navigation = useNavigation();
   const onPressNavigate = (screen: string) => {
@@ -89,6 +97,23 @@ const App = () => {
           </Pressable>
         );
       })}
+
+      <View style={styles.sperator} />
+
+      <Text style={styles.heading}>Packages for Responsive Design</Text>
+      {libraryData.map((item) => {
+        const { navigateTo = "", id = "", title = "" } = item;
+        return (
+          <Pressable
+            onPress={() => onPressNavigate(navigateTo)}
+            key={id}
+            style={styles.item}
+          >
+            <Text style={styles.title}>{title}</Text>
+            <Ionicons name="arrow-forward-outline" color={"#000"} size={18} />
+          </Pressable>
+        );
+      })}
     </ScrollView>
   );
 };
@@ -109,7 +134,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 5,
     width: "100%",
-    marginTop:10
+    marginTop: 10
   },
   heading: {
     fontSize: 20,

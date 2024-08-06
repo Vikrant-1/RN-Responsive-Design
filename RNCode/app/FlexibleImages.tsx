@@ -1,9 +1,7 @@
 import React from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+
+const { width: screenWidth } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -13,21 +11,28 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: "100%",
-    height: undefined,
-    aspectRatio: 1.5,
+    width: screenWidth * 0.8, // 80% of screen width
+    height: screenWidth * 0.8 * 0.75, // Maintain aspect ratio of 4:3
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: screenWidth * 0.05, // 5% of screen width
+    textAlign: "center",
   },
 });
 
-const FlexibleImages = () => {
+const ResponsiveExample = () => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require("../assets/photos/image-4.jpg")}
         style={styles.image}
       />
-    </ScrollView>
+      <Text style={styles.text}>
+        This is a responsive text that scales with the screen size.
+      </Text>
+    </View>
   );
 };
 
-export default FlexibleImages;
+export default ResponsiveExample;
