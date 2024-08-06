@@ -1,12 +1,9 @@
 import React from "react";
 import {
-  Dimensions,
   Image,
   ScrollView,
   StyleSheet,
 } from "react-native";
-
-const { height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
