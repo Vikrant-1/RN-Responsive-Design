@@ -28,13 +28,26 @@ const data: Item[] = [
   },
   {
     id: "3",
-    title: "Flexbox",
-    navigateTo: "FluidGrid",
+    title: "Mdeia Queries",
+    navigateTo: "MediaQueries",
   },
   {
     id: "4",
-    title: "Mdeia Queries",
-    navigateTo: "MediaQueries",
+    title: "Responsive vs Adaptive Design",
+    navigateTo: "ResvsAdoptiveDesign",
+  },
+  {
+    id: "5",
+    title: "React native css",
+    navigateTo: "RNcss",
+  },
+];
+
+const basicData: Item[] = [
+  {
+    id: "1",
+    title: "Basic Flex",
+    navigateTo: "BasicFlex",
   },
 ];
 
@@ -45,8 +58,8 @@ const App = () => {
   };
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.heading}>Key Principles of Responsive Design</Text>
-      {data.map((item) => {
+      <Text style={styles.heading}>Layout</Text>
+      {basicData.map((item) => {
         const { navigateTo = "", id = "", title = "" } = item;
         return (
           <Pressable
