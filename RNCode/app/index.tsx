@@ -16,8 +16,8 @@ const data: Item[] = [
     },
     {
         id: '2',
-        title: 'Responsive Design',
-        navigateTo: '/FluidGrid',
+        title: 'Flexible Images',
+        navigateTo: '/FlexibleImages',
     },
     {
         id: '3',
