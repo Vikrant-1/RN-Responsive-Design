@@ -1,136 +1,161 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from "react";
+import {
+  Button,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
-const FluidGridExample = () => {
-    const [justifyContent, setJustifyContent] = useState('flex-start');
-    const [alignItems, setAlignItems] = useState('stretch');
+const FluidGrid = () => {
+  const flexDirections = [
+    "row",
+    "row-reverse",
+    "column",
+    "column-reverse",
+  ] as const;
+  const justifyContents = [
+    "flex-start",
+    "flex-end",
+    "center",
+    "space-between",
+    "space-around",
+    "space-evenly",
+  ] as const;
+  const alignItemsArr = [
+    "flex-start",
+    "flex-end",
+    "center",
+    "stretch",
+    "baseline",
+  ] as const;
+  const wraps = ["nowrap", "wrap", "wrap-reverse"] as const;
+  const directions = ["inherit", "ltr", "rtl"] as const;
+  const [flexDirection, setFlexDirection] = useState(0);
+  const [justifyContent, setJustifyContent] = useState(0);
+  const [alignItems, setAlignItems] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const [wrap, setWrap] = useState(0);
 
-    const justifyContentOptions = [
-        'flex-start',
-        'center',
-        'flex-end',
-        'space-between',
-        'space-around',
-        'space-evenly',
-    ];
+  const hookedStyles = {
+    flexDirection: flexDirections[flexDirection],
+    justifyContent: justifyContents[justifyContent],
+    alignItems: alignItemsArr[alignItems],
+    direction: directions[direction],
+    flexWrap: wraps[wrap],
+  };
 
-    const alignItemsOptions = [
-        'flex-start',
-        'center',
-        'flex-end',
-    ];
-
-    return (
-        <View>
-            <View style={[styles.row, { justifyContent, alignItems }]}>
-                <View style={[styles.box, styles.red]} />
-                <View style={[styles.box, styles.blue]} />
-                <View style={[styles.box, styles.green]} />
-            </View>
-
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.container}>
-                    <Text style={styles.label}>Justify Content:</Text>
-                    {justifyContentOptions.map(option => (
-                        <TouchableOpacity
-                            key={option}
-                            style={styles.button}
-                            onPress={() => setJustifyContent(option)}
-                        >
-                            <Text style={styles.buttonText}>{option}</Text>
-                        </TouchableOpacity>
-                    ))}
-                    <Text style={styles.label}>Align Items:</Text>
-                    {alignItemsOptions.map(option => (
-                        <TouchableOpacity
-                            key={option}
-                            style={styles.button}
-                            onPress={() => setAlignItems(option)}
-                        >
-                            <Text style={styles.buttonText}>{option}</Text>
-                        </TouchableOpacity>
-                    ))}
-                    <View style={styles.explanation}>
-                        <Text style={styles.explanationText}>
-                            The `justifyContent` property aligns children within the main axis of the container.
-                        </Text>
-                        <Text style={styles.explanationText}>
-                            The `alignItems` property aligns children within the cross axis of the container.
-                        </Text>
-                        <Text style={styles.explanationText}>
-                            Use the buttons above to see how different values affect the layout.
-                        </Text>
-                    </View>
-                </View>
-            </ScrollView>
+  const changeSetting = (
+    value: number,
+    options: readonly unknown[],
+    setterFunction: (index: number) => void
+  ) => {
+    if (value === options.length - 1) {
+      setterFunction(0);
+      return;
+    }
+    setterFunction(value + 1);
+  };
+  const [squares, setSquares] = useState([<Square />, <Square />, <Square />]);
+  return (
+    <>
+      <View style={{ paddingTop: StatusBar.currentHeight }} />
+      <View style={[styles.container, styles.playingSpace, hookedStyles]}>
+        {Array(5)
+          .fill(0)
+          .map((_, i) => (
+            <Square key={i.toString()} />
+          ))}
+      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.controlSpace}>
+          <View style={styles.buttonView}>
+            <Button
+              title="Change Flex Direction"
+              onPress={() =>
+                changeSetting(flexDirection, flexDirections, setFlexDirection)
+              }
+            />
+            <Text style={styles.text}>{flexDirections[flexDirection]}</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              title="Change Justify Content"
+              onPress={() =>
+                changeSetting(
+                  justifyContent,
+                  justifyContents,
+                  setJustifyContent
+                )
+              }
+            />
+            <Text style={styles.text}>{justifyContents[justifyContent]}</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              title="Change Align Items"
+              onPress={() =>
+                changeSetting(alignItems, alignItemsArr, setAlignItems)
+              }
+            />
+            <Text style={styles.text}>{alignItemsArr[alignItems]}</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              title="Change Direction"
+              onPress={() => changeSetting(direction, directions, setDirection)}
+            />
+            <Text style={styles.text}>{directions[direction]}</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              title="Change Flex Wrap"
+              onPress={() => changeSetting(wrap, wraps, setWrap)}
+            />
+            <Text style={styles.text}>{wraps[wrap]}</Text>
+          </View>
         </View>
-    );
+      </ScrollView>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-    scrollContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        paddingBottom:500
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    row: {
-        width: '100%',
-        height: 300,
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: '#ccc',
-    },
-    box: {
-        width: 50,
-        height: 50,
-        margin: 5,
-        borderRadius: 6,
-    },
-    red: {
-        backgroundColor: 'red',
-    },
-    blue: {
-        backgroundColor: 'blue',
-    },
-    green: {
-        backgroundColor: 'green',
-    },
-    buttonContainer: {
-        marginVertical: 10,
-        alignItems: 'center',
-    },
-    button: {
-        backgroundColor: '#007BFF',
-        padding: 10,
-        borderRadius: 5,
-        marginVertical: 5,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-    },
-    label: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    },
-    explanation: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 6,
-    },
-    explanationText: {
-        fontSize: 16,
-        marginBottom: 10,
-    },
+  container: {
+    height: "50%",
+  },
+  playingSpace: {
+    backgroundColor: "white",
+    borderColor: "blue",
+    borderWidth: 3,
+  },
+  controlSpace: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    backgroundColor: "#F5F5F5",
+  },
+  buttonView: {
+    width: "50%",
+    padding: 10,
+  },
+  text: { textAlign: "center" },
 });
 
-export default FluidGridExample;
+const Square = () => (
+  <View
+    style={{
+      width: 50,
+      height: 50,
+      backgroundColor: randomHexColor(),
+    }}
+  />
+);
+
+const randomHexColor = () => {
+  return "#000000".replace(/0/g, () => {
+    return Math.round(Math.random() * 16).toString(16);
+  });
+};
+
+export default FluidGrid;

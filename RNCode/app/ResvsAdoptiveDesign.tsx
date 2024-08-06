@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
+import { Text, View, StyleSheet, useWindowDimensions } from "react-native";
 
+// Responsive Design Component
 const ResponsiveDesign = () => {
   return (
     <View style={resStyles.container}>
@@ -16,6 +12,7 @@ const ResponsiveDesign = () => {
   );
 };
 
+// Adaptive Design Component
 const AdaptiveDesign = () => {
   const { width } = useWindowDimensions();
   const isLargeScreen = width > 600;
@@ -35,12 +32,22 @@ const AdaptiveDesign = () => {
   );
 };
 
+// Main Component to showcase both Responsive and Adaptive Design
 const ResvsAdoptiveDesign = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Responsive Design</Text>
+    <View style={{ flex: 1, padding: 20 }}>
+      <Text style={styles.definitionTitle}>Responsive Design</Text>
+      <Text style={styles.definitionText}>
+        Responsive design adjusts the layout based on the available space using
+        percentage-based widths or other relative units.
+      </Text>
       <ResponsiveDesign />
-      <Text>Adaptive Design</Text>
+      <Text style={styles.definitionTitle}>Adaptive Design</Text>
+      <Text style={styles.definitionText}>
+        Adaptive design adjusts the layout based on specific breakpoints, such
+        as screen width, to provide an optimal user experience on different
+        devices.
+      </Text>
       <AdaptiveDesign />
     </View>
   );
@@ -48,6 +55,7 @@ const ResvsAdoptiveDesign = () => {
 
 export default ResvsAdoptiveDesign;
 
+// Styles for Responsive Design
 const resStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -68,6 +76,7 @@ const resStyles = StyleSheet.create({
   },
 });
 
+// Styles for Adaptive Design and Main Component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -91,5 +100,14 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18,
+  },
+  definitionTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  definitionText: {
+    fontSize: 16,
+    marginBottom: 20,
   },
 });

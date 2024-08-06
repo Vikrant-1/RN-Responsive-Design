@@ -1,9 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import {
-  FlatList,
+  SectionList,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -15,48 +14,72 @@ type Item = {
   navigateTo: string;
 };
 
-const data: Item[] = [
+const sections = [
   {
-    id: "1",
-    title: "Fluid Grid",
-    navigateTo: "FluidGrid",
+    title: "Layout",
+    data: [
+      {
+        id: "1",
+        title: "Basic Flex",
+        navigateTo: "BasicFlex",
+      },
+    ],
   },
   {
-    id: "2",
-    title: "Flexible Images",
-    navigateTo: "FlexibleImages",
+    title: "Key Principles of Responsive Design",
+    data: [
+      {
+        id: "1",
+        title: "Fluid Grid",
+        navigateTo: "FluidGrid",
+      },
+      {
+        id: "2",
+        title: "Flexible Images",
+        navigateTo: "FlexibleImages",
+      },
+      {
+        id: "3",
+        title: "Media Queries",
+        navigateTo: "MediaQueries",
+      },
+      {
+        id: "4",
+        title: "Responsive vs Adaptive Design",
+        navigateTo: "ResvsAdoptiveDesign",
+      },
+      {
+        id: "5",
+        title: "React native css",
+        navigateTo: "RNcss",
+      },
+    ],
   },
   {
-    id: "3",
-    title: "Mdeia Queries",
-    navigateTo: "MediaQueries",
+    title: "Packages for Responsive Design",
+    data: [
+      {
+        id: '1',
+        title: 'React Native Size Matters',
+        navigateTo: 'ResponsiveScreen'
+      },
+      {
+        id: '2',
+        title: 'React Native Responsive Font Size',
+        navigateTo: 'ResponsiveText'
+      }
+    ],
   },
   {
-    id: "4",
-    title: "Responsive vs Adaptive Design",
-    navigateTo: "ResvsAdoptiveDesign",
+    title: "Examples",
+    data: [
+      {
+        id: '2',
+        title: 'Images List using Grid',
+        navigateTo: 'ImagesList'
+      }
+    ],
   },
-  {
-    id: "5",
-    title: "React native css",
-    navigateTo: "RNcss",
-  },
-];
-
-const basicData: Item[] = [
-  {
-    id: "1",
-    title: "Basic Flex",
-    navigateTo: "BasicFlex",
-  },
-];
-
-const libraryData: Item[] = [
-  {
-    id: '1',
-    title: 'React Native Responsive Screen',
-    navigateTo: 'ResponsiveScreen'
-  }
 ];
 
 const App = () => {
@@ -64,57 +87,25 @@ const App = () => {
   const onPressNavigate = (screen: string) => {
     navigation.navigate(screen);
   };
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.heading}>Layout</Text>
-      {basicData.map((item) => {
-        const { navigateTo = "", id = "", title = "" } = item;
-        return (
-          <Pressable
-            onPress={() => onPressNavigate(navigateTo)}
-            key={id}
-            style={styles.item}
-          >
-            <Text style={styles.title}>{title}</Text>
-            <Ionicons name="arrow-forward-outline" color={"#000"} size={18} />
-          </Pressable>
-        );
-      })}
-
-      <View style={styles.sperator} />
-
-      <Text style={styles.heading}>Key Principles of Responsive Design</Text>
-      {data.map((item) => {
-        const { navigateTo = "", id = "", title = "" } = item;
-        return (
-          <Pressable
-            onPress={() => onPressNavigate(navigateTo)}
-            key={id}
-            style={styles.item}
-          >
-            <Text style={styles.title}>{title}</Text>
-            <Ionicons name="arrow-forward-outline" color={"#000"} size={18} />
-          </Pressable>
-        );
-      })}
-
-      <View style={styles.sperator} />
-
-      <Text style={styles.heading}>Packages for Responsive Design</Text>
-      {libraryData.map((item) => {
-        const { navigateTo = "", id = "", title = "" } = item;
-        return (
-          <Pressable
-            onPress={() => onPressNavigate(navigateTo)}
-            key={id}
-            style={styles.item}
-          >
-            <Text style={styles.title}>{title}</Text>
-            <Ionicons name="arrow-forward-outline" color={"#000"} size={18} />
-          </Pressable>
-        );
-      })}
-    </ScrollView>
+    <SectionList
+      sections={sections}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <Pressable
+          onPress={() => onPressNavigate(item.navigateTo)}
+          style={styles.item}
+        >
+          <Text style={styles.title}>{item.title}</Text>
+          <Ionicons name="arrow-forward-outline" color={"#000"} size={18} />
+        </Pressable>
+      )}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.heading}>{title}</Text>
+      )}
+      contentContainerStyle={styles.container}
+    />
   );
 };
 
@@ -122,8 +113,8 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
+    paddingBottom: 100,
   },
   item: {
     flexDirection: "row",
@@ -134,17 +125,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 5,
     width: "100%",
-    marginTop: 10
+    marginTop: 10,
   },
   heading: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginVertical:10,
   },
   title: {
     fontSize: 16,
   },
-  sperator: {
-    marginTop: 50,
-  },
+
 });
