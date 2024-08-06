@@ -74,9 +74,14 @@ const sections = [
     title: "Examples",
     data: [
       {
-        id: '2',
+        id: '1',
         title: 'Images List using Grid',
         navigateTo: 'ImagesList'
+      },
+      {
+        id: '2',
+        title: 'Orientation',
+        navigateTo: 'Orientation'
       }
     ],
   },

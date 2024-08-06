@@ -103,13 +103,6 @@ const FluidGrid = () => {
           </View>
           <View style={styles.buttonView}>
             <Button
-              title="Change Direction"
-              onPress={() => changeSetting(direction, directions, setDirection)}
-            />
-            <Text style={styles.text}>{directions[direction]}</Text>
-          </View>
-          <View style={styles.buttonView}>
-            <Button
               title="Change Flex Wrap"
               onPress={() => changeSetting(wrap, wraps, setWrap)}
             />
